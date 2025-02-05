@@ -105,8 +105,14 @@ class Controller {
           self.runAction(action)
         }
       case let .group(group):
-        userState.display = group.key
-        userState.currentGroup = group
+        if (shouldRunGroupSequence(event)){
+          hide {
+            self.runGroup(group)
+          }
+        } else {
+          userState.display = group.key
+          userState.currentGroup = group
+        }
       case .none:
         window.shake()
       }
@@ -116,6 +122,14 @@ class Controller {
     delay(1) {
       self.positionCheatsheetWindow()
     }
+  }
+
+  private func shouldRunGroupSequence(_ event: NSEvent) -> Bool{
+    let selectedModifier = Defaults[.modifierKeyForGroupSequence]
+    guard let modifierFlag = selectedModifier.flag else {
+      return false
+    }
+    return event.modifierFlags.contains(modifierFlag)
   }
 
   private func positionCheatsheetWindow() {
@@ -133,6 +147,18 @@ class Controller {
   private func showCheatsheet() {
     positionCheatsheetWindow()
     cheatsheetWindow?.orderFront(nil)
+  }
+
+  private func runGroup(_ group: Group) {
+    group.actions.forEach { groupOrAction in
+      switch groupOrAction
+      {
+        case let .group(group):
+          runGroup(group)
+        case let .action(action):
+          runAction(action)
+      }
+    }
   }
 
   private func runAction(_ action: Action) {

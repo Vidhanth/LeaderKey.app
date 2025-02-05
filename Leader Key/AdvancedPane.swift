@@ -8,6 +8,8 @@ struct AdvancedPane: View {
   private let contentWidth = 640.0
   @EnvironmentObject private var config: UserConfig
   @Default(.configDir) var configDir
+  @Default(.modifierKeyForGroupSequence) var modifierKeyForGroupSequence
+    
 
   var body: some View {
     Settings.Container(contentWidth: contentWidth) {
@@ -40,6 +42,20 @@ struct AdvancedPane: View {
             configDir = UserConfig.defaultDirectory()
           }
         }
+      }
+        
+      Settings.Section(title: "Group Sequence Modifier Key", bottomDivider: true) {
+        Picker("", selection: $modifierKeyForGroupSequence) {
+            ForEach(ModifierKey.allCases, id: \.self) { key in
+                Text(key.rawValue.capitalized).tag(key)
+          }
+        }
+        .pickerStyle(MenuPickerStyle())
+        Text("If this modifier key is held while pressing a key corresponding to a group, then all actions in that group and its subgroups will be executed sequentially.")
+              .font(.subheadline)
+              .italic()
+        .padding(.leading, 10)
+        .padding(.top, 2)
       }
 
       Settings.Section(title: "Cheatsheet", bottomDivider: true) {

@@ -1,4 +1,5 @@
 import Defaults
+import AppKit
 
 let CONFIG_DIR_EMPTY = "CONFIG_DIR_EMPTY"
 
@@ -10,4 +11,5 @@ extension Defaults.Keys {
 
   static let alwaysShowCheatsheet = Key<Bool>("alwaysShowCheatsheet", default: false)
   static let expandGroupsInCheatsheet = Key<Bool>("expandGroupsInCheatsheet", default: false)
+  static let modifierKeyForGroupSequence = Key<ModifierKey>("modifierKeyForGroupSequence", default: .none)
 }
