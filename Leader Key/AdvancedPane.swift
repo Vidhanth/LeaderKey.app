@@ -13,11 +13,14 @@ struct AdvancedPane: View {
 
   var body: some View {
     Settings.Container(contentWidth: contentWidth) {
-      Settings.Section(
-        title: "Config directory",
-        bottomDivider: true
-      ) {
-        HStack {
+    Settings.Section(
+      title: "Config directory",
+      bottomDivider: true
+    ) {
+      HStack () {
+        Text(configDir).lineLimit(1).truncationMode(.middle) 
+      }
+      HStack {
           Button("Choose…") {
             let panel = NSOpenPanel()
             panel.allowsMultipleSelection = false
@@ -27,11 +30,6 @@ struct AdvancedPane: View {
             guard let selectedPath = panel.url else { return }
             configDir = selectedPath.path
           }
-
-          Text(configDir).lineLimit(1).truncationMode(.middle)
-
-          Spacer()
-
           Button("Reveal") {
             NSWorkspace.shared.activateFileViewerSelecting([
               config.fileURL()
