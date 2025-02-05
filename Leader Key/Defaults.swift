@@ -1,5 +1,4 @@
 import Defaults
-import AppKit
 
 let CONFIG_DIR_EMPTY = "CONFIG_DIR_EMPTY"
 
