@@ -49,9 +49,8 @@ struct AdvancedPane: View {
           }
         }
         .pickerStyle(MenuPickerStyle())
-        Text("If this modifier key is held while pressing a key corresponding to a group, then all actions in that group and its subgroups will be executed sequentially.")
+        Text("Hold this modifier when pressing a group key to run all actions in that group (and its sub-groups).")
               .font(.subheadline)
-              .italic()
         .padding(.leading, 10)
         .padding(.top, 2)
       }
